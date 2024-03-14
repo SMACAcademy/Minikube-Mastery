@@ -1,0 +1,20 @@
+
+minikube start
+
+minikube addons enable ingress
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout minikube.key -out minikube.crt -subj "/CN=example.minikube.local/O=example.minikube.local"
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout minikube.key -out minikube.crt -subj "//CN=example.minikube.local//O=example.minikube.local"
+
+kubectl create secret tls minikube-tls --key minikube.key --cert minikube.crt
+
+kubectl apply -f web-app.yaml
+
+kubectl apply -f https-ingress.yaml
+
+curl --insecure https://example.minikube.local
+
+kubectl delete -f https-ingress.yaml
+kubectl delete -f web-app.yaml
+kubectl delete secret minikube-tls
