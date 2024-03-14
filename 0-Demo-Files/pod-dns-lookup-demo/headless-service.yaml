@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-headless
+spec:
+  clusterIP: None # Makes this a headless service
+  selector:
+    app: myapp
+  ports:
+  - protocol: TCP
+    port: 80

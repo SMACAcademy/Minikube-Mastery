@@ -1,0 +1,19 @@
+minikube addons enable node-dns
+
+kubectl apply -f custom-dns-pod.yaml
+
+kubectl exec custom-dns-pod -- nslookup google.com
+
+kubectl edit configmap coredns -n kube-system
+
+minikube.local:53 {
+    hosts {
+        127.0.0.1   myservice.minikube.local
+    }
+}
+
+kubectl apply -f dns-test-pod.yaml
+
+kubectl exec dns-test -- nslookup myservice.minikube.local
+
+

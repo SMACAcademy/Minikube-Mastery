@@ -1,0 +1,16 @@
+kubectl apply -f headless-service.yaml
+kubectl apply -f statefulset.yaml
+
+
+kubectl get pods -o wide
+
+kubectl run tmp-shell --rm -i --tty --image busybox -- sh
+
+nslookup myapp-0.myapp-headless.default.svc.cluster.local
+nslookup myapp-1.myapp-headless.default.svc.cluster.local
+
+
+kubectl delete -f headless-service.yaml
+kubectl delete -f statefulset.yaml
+
+
