@@ -1,0 +1,22 @@
+minikube start --network-plugin=cni --cni=calico -p networkpolicytest --driver=docker
+
+minikube start --cni=calico -p vbnetpolicy --driver=virtualbox --no-vtx-check
+minikube start --cni=calico -p vbnetpolicy --driver=virtualbox --no-vtx-check --kubernetes-version=v1.24.3
+
+
+minikube start --cni=calico -p networkpolicytest --driver=docker
+
+kubectl get pods -n kube-system
+
+kubectl apply -f nginx-deployment.yaml
+kubectl apply -f network-policy.yaml
+kubectl apply -f nginx-service.yaml
+
+
+kubectl run temp-pod --rm -it --labels="access=true" --image=busybox -- sh
+
+wget -qO- http://nginx-deployment
+
+kubectl run no-access-pod --rm -it --image=busybox -- sh
+
+wget -qO- http://nginx-deployment
