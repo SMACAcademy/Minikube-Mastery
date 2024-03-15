@@ -20,3 +20,14 @@ wget -qO- http://nginx-deployment
 kubectl run no-access-pod --rm -it --image=busybox -- sh
 
 wget -qO- http://nginx-deployment
+
+
+Debugging options
+~~~~~~~~~~~~~~~~~
+kubectl get pods -n kube-system
+
+kubectl delete pods -n kube-system -l k8s-app=calico-node
+
+kubectl logs <calico-node-pod-name> -n kube-system
+
+kubectl edit daemonset calico-node -n kube-system
