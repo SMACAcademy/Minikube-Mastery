@@ -1,0 +1,30 @@
+kubectl apply -f dynamic-pvc.yaml
+kubectl apply -f mysql-deployment.yaml
+
+
+kubectl exec -it mysql -- mysql -u root -ppassword
+
+
+CREATE DATABASE testdynamicpvc;
+USE testdynamicpvc;
+CREATE TABLE testtable (id INT, name VARCHAR(20));
+INSERT INTO testtable (id, name) VALUES (1, 'Test Data');
+
+USE testdynamicpvc; 
+SELECT * FROM testtable;
+
+EXIT;
+
+kubectl delete pod mysql
+
+kubectl apply -f mysql-deployment.yaml
+
+kubectl get all
+kubectl get PersistentVolumeClaim
+
+kubectl exec -it mysql -- mysql -u root -ppassword -e "USE testdynamicpvc; SELECT * FROM testtable;"
+
+
+minikube ssh
+
+sudo rm -rf /mnt/data/mysql-pv

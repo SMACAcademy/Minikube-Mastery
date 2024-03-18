@@ -1,0 +1,33 @@
+kubectl apply -f pv-example.yaml
+
+kubectl apply -f pvc-example.yaml
+
+kubectl apply -f mysql-deployment.yaml
+
+kubectl exec -it mysql -- mysql -u root -pmypassword
+
+CREATE DATABASE testdb;
+USE testdb;
+CREATE TABLE testtable (id INT, name VARCHAR(20));
+INSERT INTO testtable (id, name) VALUES (1, 'Test Data');
+
+USE testdb; 
+SELECT * FROM testtable;
+
+EXIT;
+
+
+kubectl delete pod mysql
+
+kubectl apply -f mysql-deployment.yaml
+
+kubectl get all
+kubectl get PersistentVolume
+kubectl get PersistentVolumeClaim
+
+kubectl exec -it mysql -- mysql -u root -pmypassword -e "USE testdb; SELECT * FROM testtable;"
+
+
+minikube ssh
+
+sudo rm -rf /mnt/data/mysql-pv

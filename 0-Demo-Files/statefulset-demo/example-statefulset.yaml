@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: example-statefulset
+spec:
+  serviceName: "example"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: example-container
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: web
+  volumeClaimTemplates: # Persistent storage for each replica
+  - metadata:
+      name: example-pvc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard" # Ensure this storage class is available in your Minikube
+      resources:
+        requests:
+          storage: 1Gi

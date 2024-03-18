@@ -1,0 +1,39 @@
+kubectl apply -f example-statefulset.yaml
+
+kubectl get statefulset
+
+kubectl get pods -l app=example
+
+kubectl get pvc
+
+
+kubectl get pv
+kubectl describe pvc example-pvc-example-statefulset-0 # Repeat for each replica
+
+# Rolling updated
+
+kubectl set image statefulset/example-statefulset example-container=nginx:alpine
+
+kubectl rollout status statefulset/example-statefulset
+
+kubectl get pod example-statefulset-0 -o=jsonpath='{$.spec.containers[:1].image}'
+
+# Rollback
+
+kubectl rollout undo statefulset/example-statefulset
+
+kubectl describe statefulset example-statefulset | grep Image
+
+
+# Scaling
+
+kubectl scale statefulset example-statefulset --replicas=5
+
+kubectl get statefulset
+kubectl get pods -l app=example
+
+kubectl scale statefulset example-statefulset --replicas=3
+
+
+
+

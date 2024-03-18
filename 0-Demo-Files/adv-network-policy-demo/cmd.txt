@@ -1,0 +1,23 @@
+# Create namespaces
+kubectl create ns production
+kubectl create ns development
+
+kubectl create ns development-test
+
+~~~~~~~~~~~~~~~~~~~
+# Apply policy
+kubectl apply -f isolate-namespaces.yaml
+
+# Label development namespace for allowed access
+kubectl label ns development access=allowed
+
+~~~~~~~~~~~~~~~~~
+
+# Apply policy
+kubectl apply -f isolate-within-ns.yaml
+
+~~~~~~~~~~~~~~~~~~
+
+# Apply policy
+kubectl apply -f egress-control.yaml
+

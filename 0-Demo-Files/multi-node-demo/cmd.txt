@@ -1,0 +1,32 @@
+minikube start --nodes=3 -p multinode --driver=docker
+
+minikube node list
+
+kubectl get all -n kube-system -o wide
+
+kubectl apply -f nginx-deployment.yaml
+
+kubectl apply -f nginx-service.yaml
+
+kubectl get deployments
+
+kubectl get service nginx-service
+
+# Testing Cross-Node Communication
+
+kubectl get pods -l app=nginx -o name
+
+kubectl get pods -l app=nginx -o wide
+
+kubectl exec pod-name -- ping -c 4 pod-ip
+
+minikube node list
+
+curl http://<node-ip>:30007
+
+
+
+
+
+
+
