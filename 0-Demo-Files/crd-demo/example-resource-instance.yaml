@@ -1,0 +1,7 @@
+apiVersion: mycompany.com/v1
+kind: ExampleResource
+metadata:
+  name: my-example-resource
+spec:
+  name: "Example Name"
+  size: 3

@@ -1,0 +1,43 @@
+minikube start --nodes=3 -p multinode --driver=docker
+
+minikube status
+
+kubectl apply -f nginx-deployment.yaml
+kubectl apply -f nginx-service.yaml
+
+kubectl scale deployment/nginx-deployment --replicas=4
+
+minikube node add
+
+kubectl get all
+
+kubectl get nodes
+
+kubectl describe node
+
+kubectl get all
+
+kubectl scale deployment/nginx-deployment --replicas=6
+
+kubectl delete node <node name>
+
+kubectl get all
+
+kubectl scale deployment/nginx-deployment --replicas=6
+
+
+kubectl apply -f busybox-pod.yaml
+
+kubectl get svc
+
+kubectl exec -it busybox -- /bin/sh
+
+wget -O- http://<service-ip>:80
+
+wget -O- http://<pod-ip>:<port>
+
+
+
+minikube stop -p multinode
+
+minikube delete -p multinode

@@ -1,0 +1,8 @@
+kubectl apply -f example-resource-crd.yaml
+
+kubectl apply -f example-resource-instance.yaml
+
+kubectl get exampleresources.mycompany.com
+
+kubectl get exampleresource my-example-resource
+
