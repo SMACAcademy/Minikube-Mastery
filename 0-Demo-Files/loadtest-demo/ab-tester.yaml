@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ab-tester
+spec:
+  containers:
+  - name: ab-tester
+    image: jordi/ab
+    command: ["sleep"]
+    args: ["300"] 

@@ -1,0 +1,13 @@
+kubectl apply -f webapp-deployment.yaml
+
+kubectl expose deployment webapp --type=NodePort --port=80
+
+# minikube service webapp --url
+
+kubectl apply -f ab-tester.yaml
+
+kubectl get svc webapp
+
+kubectl exec ab-tester -- ab -n 1000 -c 10 http://webapp:80/
+
+

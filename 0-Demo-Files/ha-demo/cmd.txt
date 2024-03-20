@@ -1,0 +1,16 @@
+kubectl apply -f sample-deployment.yaml
+
+kubectl apply -f sample-service.yaml
+
+kubectl get deployments
+kubectl get svc
+
+kubectl scale deployment/ha-sample-app --replicas=5
+
+kubectl get pods
+
+kubectl describe pod <pod_name>
+
+kubectl logs <pod_name>
+
+

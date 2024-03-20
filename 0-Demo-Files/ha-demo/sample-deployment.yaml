@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ha-sample-app
+spec:
+  replicas: 3  # ensures three instances are running
+  selector:
+    matchLabels:
+      app: ha-sample
+  template:
+    metadata:
+      labels:
+        app: ha-sample
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /notvalidpath
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /notreadypath
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+          periodSeconds: 5
