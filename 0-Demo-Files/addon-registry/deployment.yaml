@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-bash-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-bash
+  template:
+    metadata:
+      labels:
+        app: hello-bash
+    spec:
+      containers:
+      - name: hello-bash
+        image: localhost:5000/hello-bash
+        ports:
+        - containerPort: 8080

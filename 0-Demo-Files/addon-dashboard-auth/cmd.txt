@@ -1,0 +1,25 @@
+ngrok install
+
+ngrok config add-authtoken <<auth token>>
+
+kubectl proxy --address="0.0.0.0" --disable-filter=true
+
+ngrok http 127.0.0.1:8001
+
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+kubectl apply -f ServiceAccount.yaml
+
+kubectl apply -f ClusterRoleBinding.yaml
+
+kubectl apply -f secret.yaml
+
+
+kubectl -n kubernetes-dashboard get serviceaccounts dashboard-admin-sa
+
+kubectl get clusterrolebindings dashboard-admin-sa
+
+
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep dashboard-admin-sa | awk '{print $1}')
+
+

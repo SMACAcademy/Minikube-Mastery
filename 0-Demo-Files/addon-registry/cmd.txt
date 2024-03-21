@@ -1,0 +1,64 @@
+
+minikube addons enable registry
+
+kubectl get pods --namespace kube-system 
+
+
+eval $(minikube -p k8sversion docker-env)
+
+eval $(minikube -p k8sversion docker-env -u)
+
+http://localhost:63477/v2/_catalog
+
+http://localhost:63477/v2/<repository-name>/tags/list
+
+kubectl port-forward --namespace kube-system <registry-pod-name> 5000:5000
+
+docker build -t localhost:63477/hello-bash .
+
+docker tag localhost:63477/hello-bash localhost:65189/hello-bash
+
+
+docker push localhost:5000/hello-bash
+docker push localhost:63477/hello-bash
+
+kubectl apply -f deployment.yaml
+
+kubectl expose deployment hello-bash-deployment --type=NodePort --port=8080
+
+minikube service hello-bash-deployment --url
+
+
+minikube addons disable registry
+
+
+
+kubectl get pods -n kube-system
+
+
+
+kubectl port-forward --namespace kube-system registry-nd54v 5000:5000
+
+docker build -t localhost:5000/hello-bash .
+
+docker push localhost:5000/hello-bash
+
+
+docker build -t 192.168.59.111:5000/hello-bash .
+
+docker push 192.168.59.111:5000/hello-bash
+
+
+
+
+
+
+minikube image list
+minikube image load <image-name>
+minikube image rm <image-name>
+
+
+minikube cache add <image-name>
+minikube cache list
+minikube cache delete <image-name>
+

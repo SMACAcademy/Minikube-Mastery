@@ -1,0 +1,14 @@
+Dashboard Addon
+###############
+
+minikube addons enable dashboard
+
+minikube dashboard
+
+minikube dashboard --url
+
+kubectl apply -f nginx-deployment.yaml
+
+kubectl expose deployment nginx-deployment --type=NodePort --port=80
+
+

@@ -1,0 +1,20 @@
+
+minikube addons enable metrics-server
+
+kubectl get pods -n kube-system
+
+
+
+kubectl apply -f nginx-deployment.yaml
+
+kubectl apply -f nginx-hpa.yaml
+
+kubectl apply -f nginx-service.yaml
+
+
+kubectl run -i --tty load-generator --image=busybox --rm /bin/sh
+
+while true; do wget -q -O- http://nginx-deployment; done
+
+kubectl get hpa nginx-hpa --watch
+
