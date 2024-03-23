@@ -1,57 +1,36 @@
+minikube start -p regtest --driver=docker
+
+minikube profile vbk8saddon
+
+minikube update-context
 
 minikube addons enable registry
 
 kubectl get pods --namespace kube-system 
 
 
-eval $(minikube -p k8sversion docker-env)
+eval $(minikube -p regtest docker-env)
 
-eval $(minikube -p k8sversion docker-env -u)
-
-http://localhost:63477/v2/_catalog
-
-http://localhost:63477/v2/<repository-name>/tags/list
-
-kubectl port-forward --namespace kube-system <registry-pod-name> 5000:5000
-
-docker build -t localhost:63477/hello-bash .
-
-docker tag localhost:63477/hello-bash localhost:65189/hello-bash
-
-
-docker push localhost:5000/hello-bash
-docker push localhost:63477/hello-bash
-
-kubectl apply -f deployment.yaml
-
-kubectl expose deployment hello-bash-deployment --type=NodePort --port=8080
-
-minikube service hello-bash-deployment --url
+eval $(minikube -p regtest docker-env -u)
 
 
 minikube addons disable registry
 
-
-
 kubectl get pods -n kube-system
 
 
+docker build -t localhost:5000/hello-minikube .
+docker push localhost:5000/hello-minikube
 
-kubectl port-forward --namespace kube-system registry-nd54v 5000:5000
+kubectl apply -f hello-minikube-deployment-registry.yaml
 
-docker build -t localhost:5000/hello-bash .
+kubectl apply -f service.yaml
 
-docker push localhost:5000/hello-bash
+kubectl run temp-pod --rm -it --image=busybox -- sh
 
+wget -qO- http://hello-minikube-service:8080
 
-docker build -t 192.168.59.111:5000/hello-bash .
-
-docker push 192.168.59.111:5000/hello-bash
-
-
-
-
-
+http://localhost:5000/v2/_catalog
 
 minikube image list
 minikube image load <image-name>
